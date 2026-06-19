@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: draw-report-relay
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
+      - key: RELAY_SECRET
+        sync: false
