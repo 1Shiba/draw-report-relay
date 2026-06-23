@@ -32,7 +32,8 @@ app.get("/", (_req, res) => res.send("draw-report-relay v3 ok"));
 
 app.post("/report", express.json({ limit: "8mb" }), async (req, res) => {
     try {
-          const { secret, report = {}, strokes = [] } = req.body || {};
+          const { report = {}, strokes = [] } = req.body || {};
+          const secret = req.get("x-relay-secret") || (req.body && req.body.secret);
           if (!RELAY_SECRET || secret !== RELAY_SECRET) return res.status(401).json({ error: "bad secret" });
           if (!Array.isArray(strokes) || strokes.length === 0) return res.status(400).json({ error: "no strokes" });
 
